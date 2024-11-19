@@ -1,43 +1,26 @@
-{% extends "replacement/layout.html" %}
+{% extends "replacement/layout.html" %} {% block result %}
 
 
+<h3 data-aos="fade-right" style="text-align: center;font-weight: bold;">算法是如何工作的
+</h3>
+<div class="container" data-aos="fade-up">
+    <p>
+        <br> 在所有算法中，如果发生页面错误，我们首先检查帧是否有任何空闲空间。如果是这样，我们只需将新页面附加到框架中。如果没有空闲空间，我们根据不同的算法采取不同的方法.
+        <br>
+        <br>
+        <b>先进先出 (FIFO)</b>
+        <br> &nbsp;&nbsp;&nbsp;对于FIFO算法，我们只需按顺序删除帧中的页面。把它想象成一个队列。 例如，当一个新人进入队列时，他们会排在队列的后面。 该算法以类似的方式工作，如果帧已满并且需要新页面，它将用队列顶部的“最旧”页面替换新页面。 然后，在替换后，框架中的下一页将被视为队列中“最旧”的页.
+        <br>
+        <hr>
+        <b>最近最少使用 (LRU)</b>
+        <br> &nbsp;&nbsp;&nbsp;对于最近最少使用的算法，它的工作原理与FIFO非常相似。然而，这一次，当页面被引用并位于帧中时， 页面从其当前位置删除，然后基本上在帧的末尾排队。如果新页面被引用并且不在框架中，我们只需删除 位于帧末尾的页面，因为它是最近使用最少的页面。我们知道该页面是最近使用最少的页面，因为引用的页面总是 再次排队，不管它是否出现在画面中.
+        <br>
+        <hr>
+        <b>最佳页面替换(OPT)</b>
+        <br> &nbsp;&nbsp;&nbsp;在这个算法中，我们着眼于未来或“预测”。如果发生页面错误，我们只需查看页面引用的顺序，看看帧中的哪个页面最长时间不会被使用。尽管该算法在所有算法中页面错误率最低，但由于很难预测未来，因此并不实用.
+        <br>
+        <hr>
+    </p>
+</div>
 
-        {% block result %}
-        
-
-        <h3 data-aos="fade-right" style="text-align: center;font-weight: bold;">How the Algorithms Works</h3>
-        <div class="container" data-aos="fade-up">
-        <p>
-            <br>
-            In all algorithms, if a page fault occurs, we first check if the frame has any free spaces. If so, we simply append the new page into the frame. If there are no free spaces,
-            we do different methods according to different algorithms.
-            <br>
-            <br>
-            <b>First In First Out (FIFO)</b>
-            <br>
-            &nbsp;&nbsp;&nbsp;For the FIFO algorithm, we simply remove the pages in the frame, in order. Think of it as a queue. 
-            For example, when a new person comes in to the queue, they will go at the back of the queue. 
-            The algorithm works in a similar way where if the frame is full and a new page is needed, it will replace the new page with the "oldest" page which is the top of the queue.
-            Then, after replacing, the next page in the frame will be considered as the "oldest" page in the queue.
-            <br>
-            <hr>
-            <b>Least Recently Used (LRU)</b>
-            <br>
-            &nbsp;&nbsp;&nbsp;For the Least Recently Used algorithm, it is quite similar to the FIFO in terms of how it works. However, this time, when a page is referenced and is in the frame,
-            the page is removed from its current position, then it is essentially enqueued at the end of the frame. If a new page is referenced and is not in the frame, we simply remove
-            the page at the end of the frame since it is the least recently used page. We know that the page is the least recently used page because the referenced page is always being
-            enqueue again, regardless of its presence in the frame.
-            <br>
-            <hr>
-            <b>Optimal Page Replacement (OPT)</b>
-            <br>
-            &nbsp;&nbsp;&nbsp;In this algorithm, we are looking into the future or "predicting." If a page fault occurs, we simply look at the sequence of page references to see which page in the frame will
-            not be used for the longest time. Despite the fact that this algorithm has the lowest page-fault rate of all algorithms, it is not practical since it is hard to predict the future.
-            <br>
-            <hr>
-        </p>
-    </div>
-
-        {% endblock %}
-        
-
+{% endblock %}
