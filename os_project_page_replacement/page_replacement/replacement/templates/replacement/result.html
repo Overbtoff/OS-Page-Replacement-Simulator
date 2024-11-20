@@ -20,19 +20,19 @@
     
 
     <div data-aos="fade-right" data-aos-duration="200"style="text-align: center;">
-        <h1 data-aos="fade-right" data-aos-duration="500">Results</h1>
-        <h2 data-aos="fade-right" data-aos-duration="800">Sequence: {% for s in sequence %} {{s}} {%endfor%}</h2>
-        <h2 data-aos="fade-right" data-aos-duration="1100">Frame Size: {{frameAmount}}</h2>
-        <h2 data-aos="fade-right" data-aos-duration="1400">Number of References: {{length}}</h2>
-        <h3 data-aos="fade-right" data-aos-duration="1700" style="text-align: center;"><code style="color: #0066cc;">Blue is the sequence</code></h3>
-        <h3 data-aos="fade-right" data-aos-duration="2000" style="text-align: center;"><code style="color: #f44336;">Red is the replaced value when page fault occurs</code></h3>
+        <h1 data-aos="fade-right" data-aos-duration="500">结果</h1>
+        <h2 data-aos="fade-right" data-aos-duration="800">序列: {% for s in sequence %} {{s}} {%endfor%}</h2>
+        <h2 data-aos="fade-right" data-aos-duration="1100">帧尺寸: {{帧数量}}</h2>
+        <h2 data-aos="fade-right" data-aos-duration="1400">参考文献数量: {{长度}}</h2>
+        <h3 data-aos="fade-right" data-aos-duration="1700" style="text-align: center;"><code style="color: #0066cc;">蓝色是序列</code></h3>
+        <h3 data-aos="fade-right" data-aos-duration="2000" style="text-align: center;"><code style="color: #f44336;">红色是发生页面错误时的替换值</code></h3>
         
     </div>
 
     
     <hr>
     <div data-aos="fade-right" data-aos-duration="2000">
-    <h1 style="text-align: center;">Method 1: First In First Out (FIFO)</h1>
+    <h1 style="text-align: center;">方法1：先进先出 (FIFO)</h1>
     <br>   
 
     <!-- <h2 style="text-align: center;">{% for s in sequence %} <span style="margin: 5px;color: green;">{{s}}</span> {% endfor %}</h2>    -->
@@ -47,14 +47,14 @@
     </table>
     <table style="margin: auto;font-size: 1.5em;font-weight: bolder;">         
             <div style="text-align: center;">
-                {{ fifomdstring | safe }}
+                {{ fifo md字符串|字符串 }}
             </div>        
      </table>
      <div class="resultblock" style="text-align: center;" >
         
-        <p id="hits">Number of Hits: {{fifohit}}</p>
-        <p id="misses">Page Faults: {{fifofault}}</p>
-        <p id="ratio">Hit Rate: {{fiforatio}}%</p>
+        <p id="hits">点击次数: {{fifo点击}}</p>
+        <p id="misses">页面故障: {{fifo故障}}</p>
+        <p id="ratio">命中率: {{fifo比率}}%</p>
     </div>
     
 </div>
@@ -66,7 +66,7 @@
  
 
     
-    <h1 data-aos="fade-right" style="text-align: center;">Method 2: Least Recently Used (LRU)</h1>
+    <h1 data-aos="fade-right" style="text-align: center;">方法2：最近最少使用（LRU）</h1>
     <br>
     <table data-aos="fade-right" style="margin: auto; font-size: 1.5em;font-weight: bolder;">
         <tr>
@@ -81,19 +81,19 @@
     <table data-aos="fade-right" style="margin: auto;font-size: 1.5em;font-weight: bolder;">
             
             <div style="text-align: center;">
-                {{ lrumdstring | safe }}
+                {{ lru md字符串 | 安全 }}
             </div>        
      </table>
      <div data-aos="fade-right" class="resultblock" style="text-align: center;" >
-        <p id="hits">Number of Hits: {{lruhit}}</p>
-        <p id="misses">Page Faults: {{lrufault}}</p>
-        <p id="ratio">Hit Rate: {{lruratio}}%</p>
+        <p id="hits">点击次数: {{lru点击}}</p>
+        <p id="misses">页面故障: {{lru故障}}</p>
+        <p id="ratio">命中率: {{lru比率}}%</p>
     </div>
 
 
 
     <hr>
-    <h1 data-aos="fade-right" style="text-align: center;">Method 3: Optimal Page Replacement (OPT)</h1>
+    <h1 data-aos="fade-right" style="text-align: center;">方法3：最佳页面替换（OPT）</h1>
     <br>
     <table data-aos="fade-right" style="margin: auto; font-size: 1.5em;font-weight: bolder;">
         <tr>
@@ -111,14 +111,14 @@
     <table data-aos="fade-right" style="margin: auto;font-size: 1.5em;font-weight: bolder;">
             
         <div data-aos="fade-right" style="text-align: center;">
-            {{ optmdstring | safe }}
+            {{ opt md字符串 | 安全 }}
         </div>        
  </table>
  <div data-aos="fade-right" class="resultblock" style="text-align: center;" >
  
-    <p id="hits">Number of Hits: {{opthit}}</p>
-    <p id="misses">Page Faults: {{optfault}}</p>
-    <p id="ratio">Hit Rate: {{optratio}}%</p>
+    <p id="hits">点击次数: {{opt点击}}</p>
+    <p id="misses">页面故障: {{opt故障}}</p>
+    <p id="ratio">命中率: {{opt比率}}%</p>
   
 </div>
 
