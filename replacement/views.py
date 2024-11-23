@@ -309,8 +309,11 @@ def result(request):
         for s in finalList:
             print(s)
         """
-        #print(fifofinalList)
         return render(request, "replacement/result.html",{
+            "pageRefsIn": sequenceString,
+            "pageRefs": len(sequenceString.split()),
+            "frameCount": frameAmtString,
+            "algorithm": "FIFO",
             "form": EntryForm(),
             "sequence": sequenceString.split(),
             "frameAmount": frameAmtString,
@@ -337,4 +340,13 @@ def result(request):
     return HttpResponse("resultpage")
 
 def step(request):
-    return render(request,"replacement/step.html")
+    page_refs_in = request.GET.get('pageRefsIn', '')
+    page_refs = request.GET.get('pageRefs', '')
+    frame_count = request.GET.get('frameCount', 0)
+    algorithm = request.GET.get('algorithm', '')
+    return render(request,"replacement/step.html",{
+        "page_refs_in": page_refs_in,
+        "page_refs": page_refs,
+        "frame_count": frame_count,
+        "algorithmc": algorithm
+    })

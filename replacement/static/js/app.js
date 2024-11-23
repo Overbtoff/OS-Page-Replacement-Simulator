@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const emptyHeader = document.createElement('th');
     emptyHeader.className = 'border px-2 py-1';
-    emptyHeader.innerText = 'Frame';
+    emptyHeader.innerText = '物理块';
     headerRow.appendChild(emptyHeader);
 
     table.appendChild(headerRow);
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Frame label cell
       const frameCell = document.createElement('td');
       frameCell.className = 'border px-2 py-1 font-semibold';
-      frameCell.innerText = `Frame ${i + 1}`;
+      frameCell.innerText = `物理块 ${i + 1}`;
       row.appendChild(frameCell);
 
       table.appendChild(row);
@@ -500,9 +500,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const narrationText = document.getElementById('narrationText');
     if (narrationText) {
       if (step.fault) {
-        narrationText.innerText = `At time T${step.step}, page ${step.page} caused a page fault and was loaded into Frame ${step.frameUpdated + 1}.`;
+        narrationText.innerText = `在时间 T${step.step}, 页面 ${step.page} caused a page fault and was loaded into Frame ${step.frameUpdated + 1}.`;
       } else if (step.hitFrames.length > 0) {
-        narrationText.innerText = `At time T${step.step}, page ${step.page} was already in memory (Hit).`;
+        narrationText.innerText = `At time T${step.step}, 页面 ${step.page} was already in memory (Hit).`;
       } else {
         narrationText.innerText = `At time T${step.step}, page ${step.page} was already in memory. No page fault occurred.`;
       }
@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
-        playPauseBtn.innerText = 'Play';
+        playPauseBtn.innerText = '播放';
       } else {
         intervalId = setInterval(() => {
           if (currentStep < simulationHistory.length) {
@@ -560,11 +560,11 @@ document.addEventListener('DOMContentLoaded', () => {
           if (currentStep >= simulationHistory.length) {
             clearInterval(intervalId);
             intervalId = null;
-            playPauseBtn.innerText = 'Play';
+            playPauseBtn.innerText = '播放';
             if (nextStepBtn) nextStepBtn.disabled = true;
           }
         }, 1000); // Adjust the speed as needed (milliseconds)
-        playPauseBtn.innerText = 'Pause';
+        playPauseBtn.innerText = '暂停';
       }
     });
   }
@@ -616,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       if (narrationText) {
-        narrationText.innerText = 'Awaiting simulation...';
+        narrationText.innerText = '等待模拟';
       }
     }
   }
