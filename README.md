@@ -20,8 +20,6 @@ An interactive web application that visualizes page replacement algorithms in op
 
 ## Prerequisites
 
-- Node.js (v12 or higher)
-- npm (v6 or higher)
 - Django
 - markdown2
 
@@ -36,29 +34,11 @@ git clone https://github.com/log1011z/OS-Page-Replacement-Simulator.git
 cd OS-Page-Replacement-Simulator
 ```
 
-### Install Dependencies
-
-```bash
-cd .\os_project_page_replacement\page-replacement-simulator\|npm install
-pip install django
-pip install markdown2
-```
-
-### Build Tailwind CSS
-
-```bash
-npx tailwindcss -i ./style.css -o ./output.css
-```
-
 ### Run this Project
 
-Return to the root directory of the project
-
 ```bash
-make -j run
+python ./manage.py runserver
 ```
-
-OR Click the start.bat to start in Windows
 
 ## Thanks
 [josefdc](https://github.com/josefdc/page-replacement-simulator)

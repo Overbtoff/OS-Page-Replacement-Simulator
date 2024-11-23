@@ -1,0 +1,122 @@
+{% extends "replacement/layout.html" %}
+
+
+    {% block result %}
+        
+    <script>
+        AOS.init();
+    </script>
+        
+
+    <div style="display: flex; justify-content: center; margin: 20px 0;">
+        <iframe src="{% url 'step' %}" frameborder="0" style="width: 80%; height: 600px;"></iframe>
+    </div>
+
+       
+    
+
+    <div data-aos="fade-right" data-aos-duration="200"style="text-align: center;">
+        <h1 data-aos="fade-right" data-aos-duration="500">结果</h1>
+        <h2 data-aos="fade-right" data-aos-duration="800">序列: {% for s in sequence %} {{s}} {%endfor%}</h2>
+        <h2 data-aos="fade-right" data-aos-duration="1100">帧尺寸: {{帧数量}}</h2>
+        <h2 data-aos="fade-right" data-aos-duration="1400">参考文献数量: {{长度}}</h2>
+        <h3 data-aos="fade-right" data-aos-duration="1700" style="text-align: center;"><code style="color: #0066cc;">蓝色是序列</code></h3>
+        <h3 data-aos="fade-right" data-aos-duration="2000" style="text-align: center;"><code style="color: #f44336;">红色是发生页面错误时的替换值</code></h3>
+        
+    </div>
+
+    
+    <hr>
+    <div data-aos="fade-right" data-aos-duration="2000">
+    <h1 style="text-align: center;">方法1：先进先出 (FIFO)</h1>
+    <br>   
+
+    <!-- <h2 style="text-align: center;">{% for s in sequence %} <span style="margin: 5px;color: green;">{{s}}</span> {% endfor %}</h2>    -->
+    <table style="margin: auto; font-size: 1.5em;font-weight: bolder;">
+        <tr>
+        {% for s in sequence %}                
+        <td style="padding: 13px; color: #0066cc;">            
+            {{s}}            
+        </td>
+        {% endfor %}
+        </tr>
+    </table>
+    <table style="margin: auto;font-size: 1.5em;font-weight: bolder;">         
+            <div style="text-align: center;">
+                {{ fifomdstring | safe }}
+            </div>        
+     </table>
+     <div class="resultblock" style="text-align: center;" >
+        
+        <p id="hits">点击次数: {{fifohit}}</p>
+        <p id="misses">页面故障: {{fifofault}}</p>
+        <p id="ratio">命中率: {{fiforatio}}%</p>
+    </div>
+    
+</div>
+
+
+
+<hr>
+
+ 
+
+    
+    <h1 data-aos="fade-right" style="text-align: center;">方法2：最近最少使用（LRU）</h1>
+    <br>
+    <table data-aos="fade-right" style="margin: auto; font-size: 1.5em;font-weight: bolder;">
+        <tr>
+        {% for s in sequence %} 
+               
+        <td style="padding: 13px; color: #0066cc;">            
+            {{s}}            
+        </td>
+        {% endfor %}
+        </tr>
+    </table>
+    <table data-aos="fade-right" style="margin: auto;font-size: 1.5em;font-weight: bolder;">
+            
+            <div style="text-align: center;">
+                {{ lrumdstring | safe }}
+            </div>        
+     </table>
+     <div data-aos="fade-right" class="resultblock" style="text-align: center;" >
+        <p id="hits">点击次数: {{lruhit}}</p>
+        <p id="misses">页面故障: {{lrufault}}</p>
+        <p id="ratio">命中率: {{lruratio}}%</p>
+    </div>
+
+
+
+    <hr>
+    <h1 data-aos="fade-right" style="text-align: center;">方法3：最佳页面替换（OPT）</h1>
+    <br>
+    <table data-aos="fade-right" style="margin: auto; font-size: 1.5em;font-weight: bolder;">
+        <tr>
+        {% for s in sequence %} 
+               
+        <td style="padding: 13px; color: #0066cc;">            
+            {{s}}            
+        </td>
+        {% endfor %}
+        </tr>
+    </table>   
+
+
+
+    <table data-aos="fade-right" style="margin: auto;font-size: 1.5em;font-weight: bolder;">
+            
+        <div data-aos="fade-right" style="text-align: center;">
+            {{ optmdstring | safe }}
+        </div>        
+ </table>
+ <div data-aos="fade-right" class="resultblock" style="text-align: center;" >
+ 
+    <p id="hits">点击次数: {{opthit}}</p>
+    <p id="misses">页面故障: {{optfault}}</p>
+    <p id="ratio">命中率: {{optratio}}%</p>
+  
+</div>
+
+    <hr>
+    {% endblock %}
