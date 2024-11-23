@@ -500,11 +500,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const narrationText = document.getElementById('narrationText');
     if (narrationText) {
       if (step.fault) {
-        narrationText.innerText = `在时间 T${step.step}, 页面 ${step.page} caused a page fault and was loaded into Frame ${step.frameUpdated + 1}.`;
+        narrationText.innerText = `在时间 T${step.step}, 页面 ${step.page} 导致了一次缺页中断并被加载到帧 ${step.frameUpdated + 1}.`;
       } else if (step.hitFrames.length > 0) {
-        narrationText.innerText = `At time T${step.step}, 页面 ${step.page} was already in memory (Hit).`;
+        narrationText.innerText = `在时间 T${step.step}, 页面 ${step.page} 已经在内存中 (命中).`;
       } else {
-        narrationText.innerText = `At time T${step.step}, page ${step.page} was already in memory. No page fault occurred.`;
+        narrationText.innerText = `在时间 T${step.step}, 页面 ${step.page} 已经在内存中，没有缺页中断发生`;
       }
     }
   }
@@ -607,11 +607,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const step = simulationHistory[stepIndex - 1];
       if (narrationText) {
         if (step.fault) {
-          narrationText.innerText = `At time T${step.step}, page ${step.page} caused a page fault and was loaded into Frame ${step.frameUpdated + 1}.`;
+          narrationText.innerText = `在时间 T${step.step}, 页面 ${step.page} 导致了一次缺页中断并被加载到帧 ${step.frameUpdated + 1}.`;
         } else if (step.hitFrames.length > 0) {
-          narrationText.innerText = `At time T${step.step}, page ${step.page} was already in memory (Hit).`;
+          narrationText.innerText = `在时间 T${step.step}, 页面 ${step.page} 已经在内存中 (命中).`;
         } else {
-          narrationText.innerText = `At time T${step.step}, page ${step.page} was already in memory. No page fault occurred.`;
+          narrationText.innerText = `在时间 T${step.step}, 页面 ${step.page} 已经在内存中，没有缺页中断发生`;
         }
       }
     } else {
