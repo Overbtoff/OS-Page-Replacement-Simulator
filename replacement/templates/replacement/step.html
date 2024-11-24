@@ -13,7 +13,7 @@
 
     <!-- Input Section -->
     <section id="inputSection" class="mb-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="flex grid grid-cols-1 md:grid-cols-3 gap-4 ml-4">
         <!-- Page References Input -->
         <div style="display: none">
           <label for="pageReferences" class="block mb-1">Page References:</label>
@@ -36,10 +36,14 @@
             <option value="Optimal">OPT</option>
           </select>
         </div>
-      </div>
-      <button id="startSimulation" class="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">
+        <!-- Button -->
+        <div class="absolute flex items-end p-2">
+         <button id="startSimulation" class="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">
         开始模拟
       </button>
+    </div>
+   </div>
+      
     </section>
 
 
@@ -73,8 +77,8 @@
     <section id="legend" class="mb-6">
       <h3 class="text-lg font-semibold">图例:</h3>
       <ul class="list-disc list-inside">
-        <li><span class="inline-block w-4 h-4 page-fault mr-2"></span>缺页 (Page fault occurred and loaded into memory)</li>
-        <li><span class="inline-block w-4 h-4 page-hit mr-2"></span>命中 (Page was already in memory)</li>
+        <li><span class="inline-block w-4 h-4 page-fault mr-2"></span>缺页 (发生缺页中断并加载到内存里))</li>
+        <li><span class="inline-block w-4 h-4 page-hit mr-2"></span>命中 (页面已经在内存中)</li>
       </ul>
     </section>
 

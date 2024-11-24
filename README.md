@@ -45,7 +45,7 @@ python ./manage.py runserver
 
 [nutchanon-c](https://github.com/nutchanon-c/os_project_page_replacement)
 
-[SilyCheese](https://github.com/CheeseSilly/OS-Page-Replacement-Simulator)
+[SillyCheese](https://github.com/CheeseSilly/OS-Page-Replacement-Simulator)
 
 Thank you all:)
 
