@@ -16,8 +16,8 @@
     <div data-aos="fade-right" data-aos-duration="200"style="text-align: center; margin-top: 10px" >
         <h1 data-aos="fade-right" data-aos-duration="500">结果</h1>
         <h2 data-aos="fade-right" data-aos-duration="800">序列: {% for s in sequence %} {{s}} {%endfor%}</h2>
-        <h2 data-aos="fade-right" data-aos-duration="1100">帧尺寸: {{frameAmount}}</h2>
-        <h2 data-aos="fade-right" data-aos-duration="1400">参考文献数量: {{length}}</h2>
+        <h2 data-aos="fade-right" data-aos-duration="1100">物理块大小: {{frameAmount}}</h2>
+        <h2 data-aos="fade-right" data-aos-duration="1400">序列大小: {{length}}</h2>
         <h3 data-aos="fade-right" data-aos-duration="1700" style="text-align: center;"><code style="color: #0066cc;">蓝色是序列</code></h3>
         <h3 data-aos="fade-right" data-aos-duration="2000" style="text-align: center;"><code style="color: #f44336;">红色是发生页面错误时的替换值</code></h3>
         
@@ -46,8 +46,8 @@
      </table>
      <div class="resultblock" style="text-align: center;" >
         
-        <p id="hits">点击次数: {{fifohit}}</p>
-        <p id="misses">页面故障: {{fifofault}}</p>
+        <p id="hits">命中次数: {{fifohit}}</p>
+        <p id="misses">缺页中断: {{fifofault}}</p>
         <p id="ratio">命中率: {{fiforatio}}%</p>
     </div>
     
@@ -74,8 +74,8 @@
             </div>        
      </table>
      <div data-aos="fade-right" class="resultblock" style="text-align: center;" >
-        <p id="hits">点击次数: {{lruhit}}</p>
-        <p id="misses">页面故障: {{lrufault}}</p>
+        <p id="hits">命中次数: {{lruhit}}</p>
+        <p id="misses">缺页中断: {{lrufault}}</p>
         <p id="ratio">命中率: {{lruratio}}%</p>
     </div>
 
@@ -103,8 +103,8 @@
     </div>
 </table>
 <div data-aos="fade-right" class="resultblock" style="text-align: center;" >
-    <p id="hits">点击次数: {{lfuhit}}</p>
-    <p id="misses">页面故障: {{lfufault}}</p>
+    <p id="hits">命中次数: {{lfuhit}}</p>
+    <p id="misses">缺页中断: {{lfufault}}</p>
     <p id="ratio">命中率: {{lfuratio}}%</p>
 </div>
 
@@ -133,8 +133,8 @@
  </table>
  <div data-aos="fade-right" class="resultblock" style="text-align: center;" >
  
-    <p id="hits">点击次数: {{opthit}}</p>
-    <p id="misses">页面故障: {{optfault}}</p>
+    <p id="hits">命中次数: {{opthit}}</p>
+    <p id="misses">缺页中断: {{optfault}}</p>
     <p id="ratio">命中率: {{optratio}}%</p>
   
 </div>

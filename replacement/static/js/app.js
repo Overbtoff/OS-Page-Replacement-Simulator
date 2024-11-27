@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
           case 'FIFO':
             simulationResult = simulateFIFO(pageRefs, frameCount);
             break;
-          case 'ModifiedFIFO':
-            simulationResult = simulateModifiedFIFO(pageRefs, frameCount);
+          case 'LFU':
+            simulationResult = simulateLFU(pageRefs, frameCount);
             break;
           case 'LRU':
             simulationResult = simulateLRU(pageRefs, frameCount);
@@ -221,42 +221,58 @@ document.addEventListener('DOMContentLoaded', () => {
     return { history, pageFaults };
   }
 
-  // Modified FIFO (Second-Chance Algorithm) Implementation
-  function simulateModifiedFIFO(pages, frameCount) {
-    let frames = Array(frameCount).fill(null); // Initialize frames
-    let referenceBits = Array(frameCount).fill(0); // Reference bits for second chance
-    let pageFaults = 0;
-    let history = [];
-    let pointer = 0; // Points to the frame to be replaced next
+
+  //LFU
+  function simulateLFU(pages, frameCount) {
+    let frames = Array(frameCount).fill(null); // 当前存储的页面框架
+    let pageFaults = 0; // 缺页次数
+    let history = []; // 历史记录
+    let frequency = {}; // 用于跟踪页面使用频率
+    let lastUsed = {}; // 用于记录每个页面上次使用的时间
 
     pages.forEach((page, index) => {
       let fault = false;
       let frameUpdated = null;
       let hitFrames = [];
 
-      if (frames.includes(page)) {
-        // Page hit
-        const frameIndex = frames.indexOf(page);
-        referenceBits[frameIndex] = 1; // Set reference bit
-        hitFrames.push(frameIndex);
-      } else {
-        // Page fault
+      // 更新页面使用频率和时间戳
+      if (!frequency[page]) {
+        frequency[page] = 0;
+      }
+      frequency[page]++;
+      lastUsed[page] = index;
+
+      if (!frames.includes(page)) {
         fault = true;
-        while (true) {
-          if (referenceBits[pointer] === 0) {
-            // Replace this page
-            frames[pointer] = page;
-            frameUpdated = pointer;
-            referenceBits[pointer] = 0; // Reset reference bit
-            pointer = (pointer + 1) % frameCount;
-            break;
-          } else {
-            // Give a second chance
-            referenceBits[pointer] = 0;
-            pointer = (pointer + 1) % frameCount;
-          }
+
+        if (frames.includes(null)) {
+          // 如果有空位，直接放入
+          const emptyIndex = frames.indexOf(null);
+          frames[emptyIndex] = page;
+          frameUpdated = emptyIndex;
+        } else {
+          // 找到使用频率最低的页面
+          let minFrequency = Math.min(...frames.map(f => frequency[f]));
+          let candidates = frames.filter(f => frequency[f] === minFrequency);
+
+          // 如果有多个候选者，选择最久未使用的
+          let victim = candidates.reduce((leastRecentlyUsed, candidate) => {
+            return lastUsed[candidate] < lastUsed[leastRecentlyUsed] ? candidate : leastRecentlyUsed;
+          });
+
+          const victimIndex = frames.indexOf(victim);
+          frames[victimIndex] = page;
+          frameUpdated = victimIndex;
+
+          // 清除被替换页面的记录
+          delete frequency[victim];
+          delete lastUsed[victim];
         }
         pageFaults++;
+      } else {
+        // 页面命中
+        const hitIndex = frames.indexOf(page);
+        hitFrames.push(hitIndex);
       }
 
       history.push({
@@ -265,12 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
         frames: [...frames],
         fault: fault,
         frameUpdated: frameUpdated,
-        hitFrames: hitFrames, // Array of frame indices that had hits
+        hitFrames: hitFrames, // 命中的框架索引
       });
     });
 
     return { history, pageFaults };
   }
+
 
   function simulateLRU(pages, frameCount) {
     let frames = Array(frameCount).fill(null);

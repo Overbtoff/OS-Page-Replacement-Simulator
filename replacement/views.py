@@ -243,101 +243,153 @@ def lru(sequence, frameAmt):
         
     #print(f"---LRU---\nHit: {hit}, Miss: {miss}")
 
+# def lfu(sequence, frameAmt):
+#     global lfufinalList, lfufinalstr, lfufault, lfuhit, lfuratio
+#     sequenceList = sequence
+#     frames = []
+#     lfuallList = []
+#     hit = 0
+#     miss = 0
+#     temp = []
+#     cache = {}  # 缓存，存储键和对应的值及频率
+#     freq = {}  # 存储每个频率对应的键集合
+#     size = 0  # 当前缓存中的数据量
+#
+#     # LFU算法
+#     for key in sequenceList:
+#         if key in cache:
+#             # 缓存命中
+#             hit += 1
+#             cache[key]['freq'] += 1  # 增加页面的访问频率
+#             # 确保 freq 字典中存在该频率的键，如果不存在则创建一个空列表
+#             freq.setdefault(cache[key]['freq'], []).append(key)
+#             # 更新 frames 列表，将命中的页面移动到列表末尾
+#             frames.remove(key)
+#             frames.append(key)
+#
+#             temp = frames[:]
+#             temp.append(key)
+#             lfuallList.append(temp)
+#         else:
+#             # 缓存未命中
+#             miss += 1
+#             if size < frameAmt:
+#                 # 缓存未满，添加新项
+#                 cache[key] = {'val': key, 'freq': 1}
+#                 freq[1] = [key]
+#                 frames.append(key)
+#                 temp = frames[:]
+#                 temp[-1] = 'red' + str(temp[-1])
+#                 lfuallList.append(temp[:])
+#                 size += 1
+#             else:
+#                 # 缓存已满，需要淘汰
+#                 while freq:
+#                     # 对频率列表进行升序排序，确保lowest_freq是最小的频率
+#                     freq_list = sorted(freq.keys(), reverse=False)
+#                     lowest_freq = freq_list[0]
+#                     if len(freq[lowest_freq]) > 0:
+#                         # 从具有最低频率的页面列表中弹出第一个页面作为被淘汰的页面
+#                         evict_key = freq[lowest_freq].pop(0)
+#                         if freq[lowest_freq] == []:
+#                             del freq[lowest_freq]
+#                         del cache[evict_key]
+#                         frames.remove(evict_key)
+#                         break
+#                     else:
+#                         # 如果最低频率的列表为空，删除这个频率
+#                         del freq[lowest_freq]
+#                 # 添加新项
+#                 cache[key] = {'val': key, 'freq': 1}
+#                 freq.setdefault(1, []).append(key)
+#                 frames.append(key)
+#                 temp = frames[:]
+#                 temp[-1] = 'red' + str(temp[-1])
+#                 lfuallList.append(temp[:])
+#                 size += 1
+#
+#
+#
+#     # 转置lfuallList以生成HTML表格
+#     # lfuallList.append(temp)
+#     lfufinalList = transpose(lfuallList, frameAmt)
+#
+#     # 添加HTML标签以生成表格
+#     lfufinalstr = ''
+#     for lists in lfufinalList:
+#         lfufinalstr += '<tr>'  # 开始新的一行
+#         for attr in lists:
+#             if 'red' in attr:
+#                 # 如果属性中包含'red'，表示这是一个新加入缓存的元素，用红色标记
+#                 lfufinalstr += '<td style="padding: 13px; background-color:#f44336;">' + attr[3:] + '</td>'
+#             else:
+#                 # 否则，正常添加缓存中的元素
+#                 lfufinalstr += '<td style="padding: 13px;">' + attr + '</td>'
+#         lfufinalstr += '</tr>\n'  # 结束当前行
+#
+#     # 统计和赋值
+#     lfufault = miss  # 缓存未命中次数
+#     lfuhit = hit  # 缓存命中次数
+#     lfuratio = 100.0 * hit / (len(sequenceList) if sequenceList else 1)  # 计算命中率
+#
+
+#
 def lfu(sequence, frameAmt):
     global lfufinalList, lfufinalstr, lfufault, lfuhit, lfuratio
     sequenceList = sequence
-    frames = []
+    frames = []  # 当前内存框架
+    freq_map = {}  # 记录页面的使用频率
     lfuallList = []
     hit = 0
     miss = 0
     temp = []
-    cache = {}  # 缓存，存储键和对应的值及频率
-    freq = {}  # 存储每个频率对应的键集合
-    size = 0  # 当前缓存中的数据量
 
     # LFU算法
-    for key in sequenceList:
-        if key in cache:
-            # 缓存命中
-            hit += 1
-            cache[key]['freq'] += 1  # 增加页面的访问频率
-            # 确保 freq 字典中存在该频率的键，如果不存在则创建一个空列表
-            freq.setdefault(cache[key]['freq'], []).append(key)
-            # 更新 frames 列表，将命中的页面移动到列表末尾
-            frames.remove(key)
-            frames.append(key)
-
-            temp = frames[:]
-            temp.append(key)
-            lfuallList.append(temp)
-        else:
-            # 缓存未命中
+    for s in sequenceList:
+        # 页面未命中（缺页）
+        if s not in frames:
             miss += 1
-            if size < frameAmt:
-                # 缓存未满，添加新项
-                cache[key] = {'val': key, 'freq': 1}
-                freq[1] = [key]
-                frames.append(key)
-                temp = frames[:]
-                temp[-1] = 'red' + str(temp[-1])
-                lfuallList.append(temp[:])
-                size += 1
-            else:
-                # 缓存已满，需要淘汰
-                while freq:
-                    # 对频率列表进行升序排序，确保lowest_freq是最小的频率
-                    freq_list = sorted(freq.keys(), reverse=False)
-                    lowest_freq = freq_list[0]
-                    if len(freq[lowest_freq]) > 0:
-                        # 从具有最低频率的页面列表中弹出第一个页面作为被淘汰的页面
-                        evict_key = freq[lowest_freq].pop(0)
-                        if freq[lowest_freq] == []:
-                            del freq[lowest_freq]
-                        del cache[evict_key]
-                        frames.remove(evict_key)
-                        break
-                    else:
-                        # 如果最低频率的列表为空，删除这个频率
-                        del freq[lowest_freq]
-                # 添加新项
-                cache[key] = {'val': key, 'freq': 1}
-                freq.setdefault(1, []).append(key)
-                frames.append(key)
-                temp = frames[:]
-                temp[-1] = 'red' + str(temp[-1])
-                lfuallList.append(temp[:])
-                size += 1
+            # 如果框架已满，替换最少使用的页面
+            if len(frames) == frameAmt:
+                # 找到频率最低的页面
+                min_freq = min(freq_map.values())
+                candidates = [page for page in frames if freq_map[page] == min_freq]
+                # 在频率相同的页面中选择最早加入的页面
+                page_to_remove = candidates[0]
+                frames.remove(page_to_remove)
+                del freq_map[page_to_remove]
 
+            # 添加新页面
+            frames.append(s)
+            freq_map[s] = 1  # 初始化页面的使用频率
+            temp = frames[:]
+            temp[-1] = 'red' + temp[-1]  # 高亮新增页面
 
+        # 页面命中
+        else:
+            hit += 1
+            freq_map[s] += 1  # 更新页面的使用频率
+            temp = frames[:]  # 保持当前框架状态
 
-    # 转置lfuallList以生成HTML表格
-    # lfuallList.append(temp)
+        lfuallList.append(temp)
+
     lfufinalList = transpose(lfuallList, frameAmt)
 
-    # 添加HTML标签以生成表格
+    # 生成 HTML 表格
     lfufinalstr = ''
     for lists in lfufinalList:
-        lfufinalstr += '<tr>'  # 开始新的一行
+        lfufinalstr += '<tr>'
         for attr in lists:
             if 'red' in attr:
-                # 如果属性中包含'red'，表示这是一个新加入缓存的元素，用红色标记
-                lfufinalstr += '<td style="padding: 13px; background-color:#f44336;">' + attr[3:] + '</td>'
+                lfufinalstr += '<td style="padding: 13px;background-color:#f44336;">' + attr[3:] + '</td>'
             else:
-                # 否则，正常添加缓存中的元素
                 lfufinalstr += '<td style="padding: 13px;">' + attr + '</td>'
-        lfufinalstr += '</tr>\n'  # 结束当前行
+        lfufinalstr += '</tr>\n'
 
-    # 统计和赋值
-    lfufault = miss  # 缓存未命中次数
-    lfuhit = hit  # 缓存命中次数
-    lfuratio = 100.0 * hit / (len(sequenceList) if sequenceList else 1)  # 计算命中率
-#
-# # # Example usage:
-# # sequence = [1, 2, 3, 4, 1, 5, 1, 2, 6, 1, 7, 1]
-# # frameAmt = 3
-# # lfu_html, lfu_hit, lfu_miss = lfu(sequence, frameAmt)
-# # print(f"Hit: {lfu_hit}, Miss: {lfu_miss}")
-# # print(lfu_html)  # 打印HTML表格
+    lfufault = miss
+    lfuhit = hit
+    lfuratio = 100.0 * hit / len(sequenceList)
+
 
 
 
