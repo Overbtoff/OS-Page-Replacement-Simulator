@@ -65,17 +65,21 @@
             {%comment%}
             {{ form }}
             {%endcomment%}
-
-            <div class="form-row" style="text-align: center;">
-                <div class="form-group col">
+            
+            <div class="form-row" style="display: flex; justify-content: center; ">
+                <div class="form-group col"  style="text-align: center;">
                     <label for="seq">页面序列</label>
                     <input type="text" name="seq" id="seq" class="form-control"
                            placeholder="ex. 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1" style="width: 50%; margin: auto;"
                            required {% if pageRefsIn %} value="{{ pageRefsIn }}" {% endif %} >
-                </div>
 
             </div>
         
+            <div class="form-group" style="margin: 0; padding: 5px; text-align: center;" >
+                <button type="button" class="btn btn-primary" onclick="randomizeInputs()">随机</button>
+            </div>
+        
+        </div>
         
             <div class="form-row">
                 <div class="form-group col" style="text-align: center;">
@@ -94,15 +98,13 @@
 
 
 
-        <div class="form-row" style="display: flex; justify-content: center; ">
-                <div class="form-group" style="margin: 0; padding: 5px; text-align: center;" >
-                <button type="button" class="btn btn-primary" onclick="randomizeInputs()">随机</button>
-                </div>
+
+ 
 
                  <div class="form-group" style="margin: 0; padding: 5px; text-align: center;"  >
                     <input type="submit" class="btn btn-primary">
                 </div>
-        </div>
+ 
 
 
         </form> 
