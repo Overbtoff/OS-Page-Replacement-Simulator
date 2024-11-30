@@ -13,24 +13,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        .resultblock{
-            display: block; 
-            margin-top: 1.33em; 
-            margin-bottom: 1.33em; 
-            margin-left: 0; 
-            margin-right: 0; 
-            font-weight: bold;
-            font-size: 1.17em;
-        }        
-        #hits{
-            color: #04aa6d;
-        }
-        #misses{
-            color:#f44336
-        }
-        #ratio{
-            color:rgb(0, 0, 0)
-        }
         table,tr,td{
             border: 1px solid black
         }
@@ -38,7 +20,18 @@
             border: 5% solid black;
         }
     </style>
+    <style>
+        /* 初始状态：没有旋转 */
+        #randomimg {
+            transition: transform 0.5s ease-in-out;
+            cursor: pointer;
+        }
 
+        /* 旋转的类 */
+        .rotate {
+            transform: rotate(360deg);
+        }
+    </style>
 
 
 
@@ -69,22 +62,22 @@
             <div class="form-row" style="display: flex; justify-content: center; ">
                 <div class="form-group col"  style="text-align: center;">
                     <label for="seq">页面序列</label>
+                <div style="display: flex; justify-content: center;  align-items: center; ">
                     <input type="text" name="seq" id="seq" class="form-control"
-                           placeholder="ex. 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1" style="width: 50%; margin: auto;"
+                           placeholder="ex. 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1" style="width: 50%; margin: 20px;"
                            required {% if pageRefsIn %} value="{{ pageRefsIn }}" {% endif %} >
-
+                    <img id="randomimg" src="{% static 'sezi.svg' %}" width="30" height="30" style="cursor: pointer; " onclick="randomizeInputs()" title="随机产生">
+                </div>
             </div>
         
-            <div class="form-group" style="margin: 0; padding: 5px; text-align: center;" >
-                <button type="button" class="btn btn-primary" onclick="randomizeInputs()">随机</button>
-            </div>
+           
         
         </div>
         
             <div class="form-row">
                 <div class="form-group col" style="text-align: center;">
-                    <label for="page_size">页面长度</label>
-                    <input type="text" name="page_size" id="page_size" class="form-control" placeholder="默认20" style="width: 18%; margin: auto; text-align: center;" >
+                    <label for="page_size">序列长度</label>
+                    <input type="text" name="page_size" id="page_size" class="form-control" placeholder="ex. 6" style="width: 18%; margin: auto;  text-align: center;" required {% if pageRefs %} value="{{ pageRefs }}" {% endif %}>
                 </div>
             </div>
             
@@ -142,9 +135,29 @@ function randomizeInputs() {
     // 将生成的值赋值给对应的输入字段
     document.getElementById("seq").value = pageRefsIn;
     document.getElementById("fsize").value = frameCount;
+
+    const img = document.getElementById('randomimg');
+
+    // 在每次点击时切换旋转类
+    img.classList.add('rotate');
+
+    // 动画完成后移除旋转类，准备下次点击
+    img.addEventListener('transitionend', function() {
+        img.classList.remove('rotate');
+    });
 }
 </script>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var icon = document.querySelector(".rotate-icon");
+        icon.addEventListener("mouseover", function() {
+            icon.style.transform = "rotate(360deg)";
+        });
+        icon.addEventListener("mouseout", function() {
+            icon.style.transform = "rotate(0deg)";
+        });
+    });
+</script>
 
 </body>
 
