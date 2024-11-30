@@ -41,6 +41,7 @@
 
 
 
+
     <title>页面替换算法</title>
 
     <!-- Favicon -->
@@ -64,32 +65,45 @@
             {%comment%}
             {{ form }}
             {%endcomment%}
+
             <div class="form-row" style="text-align: center;">
                 <div class="form-group col">
                     <label for="seq">页面序列</label>
-                    <input type="text" name="seq" id="seq" class="form-control" placeholder="ex. 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1" style="width: 50%; margin: auto;" required {% if pageRefsIn %} value="{{ pageRefsIn }}" {% endif %} >
+                    <input type="text" name="seq" id="seq" class="form-control"
+                           placeholder="ex. 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1" style="width: 50%; margin: auto;"
+                           required {% if pageRefsIn %} value="{{ pageRefsIn }}" {% endif %} >
                 </div>
-                
-            </div>
 
+            </div>
+        
+        
+            <div class="form-row">
+                <div class="form-group col" style="text-align: center;">
+                    <label for="page_size">页面长度</label>
+                    <input type="text" name="page_size" id="page_size" class="form-control" placeholder="默认20" style="width: 18%; margin: auto; text-align: center;" >
+                </div>
+            </div>
+            
             <div class="form-row">
                 <div class="form-group col" style="text-align: center;">
                     <label for="fsize">物理块数</label>
-                    <input type="text" name="fsize" id="fsize" class="form-control" placeholder="ex. 3" style="width: 9%; margin: auto; text-align: center;" required {% if frameCount %} value="{{ frameCount }}" {% endif %}>
+                    <input type="text" name="fsize" id="fsize" class="form-control" placeholder="ex. 3" style="width: 18%; margin: auto; text-align: center;" required {% if frameCount %} value="{{ frameCount }}" {% endif %}>
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col" style="text-align: center;">
-                <button type="button" class="btn btn-primary" onclick="randomizeInputs()">随机填写</button>
-                </div>
-            </div>
 
-            <div class="form-row">
-                <div class="form-group col" style="text-align: center;">
+
+
+        <div class="form-row" style="display: flex; justify-content: center; ">
+                <div class="form-group" style="margin: 0; padding: 5px; text-align: center;" >
+                <button type="button" class="btn btn-primary" onclick="randomizeInputs()">随机</button>
+                </div>
+
+                 <div class="form-group" style="margin: 0; padding: 5px; text-align: center;"  >
                     <input type="submit" class="btn btn-primary">
                 </div>
-            </div>
+        </div>
+
 
         </form> 
     </div>
@@ -104,15 +118,24 @@
 
 <script>
 function randomizeInputs() {
+    // 获取用户输入的页面长度值
+    var pageSize = document.getElementById("page_size").value;
+    if (pageSize === "") {
+        pageSize = 20; // 如果没有输入，可以设置一个默认值，比如20
+    }
     // 生成随机页面序列
     var pageRefsIn = "";
-    for (var i = 0; i < 20; i++) { // 假设我们想要一个长度为20的随机序列
+    for (var i = 0; i < pageSize; i++) { // 假设我们想要一个长度为20的随机序列
         pageRefsIn += Math.floor(Math.random() * 10); // 生成一个0-9之间的随机数
-        if (i < 19) pageRefsIn += " "; // 在数字之间添加空格，除了最后一个数字
+        if (i < pageSize) pageRefsIn += " "; // 在数字之间添加空格，除了最后一个数字
     }
-
-    // 生成随机物理块数
-    var frameCount = Math.floor(Math.random() * 10) + 1; // 生成一个1-10之间的随机数
+    
+    // 获取用户输入的物理块数
+    var frameCount = document.getElementById("fsize").value;
+    if (frameCount === "") {// 如果没有输入,生成随机物理块数
+        frameCount = Math.floor(Math.random() * 10) + 1; // 生成一个1-10之间的随机数
+    }
+    
 
     // 将生成的值赋值给对应的输入字段
     document.getElementById("seq").value = pageRefsIn;
