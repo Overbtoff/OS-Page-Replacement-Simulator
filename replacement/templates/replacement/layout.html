@@ -41,6 +41,7 @@
 
 
 
+
     <title>页面替换算法</title>
 
     <!-- Favicon -->
@@ -76,27 +77,29 @@
             </div>
         
         
-            <div class="form-row" style="display: flex; text-align: center;">
+            <div class="form-row">
                 <div class="form-group col" style="text-align: center;">
                     <label for="page_size">页面长度</label>
-                    <input type="text" name="page_size" id="page_size" class="form-control" placeholder="ex. 6" style="width: 9%; margin: auto; text-align: center;" >
+                    <input type="text" name="page_size" id="page_size" class="form-control" placeholder="默认20" style="width: 18%; margin: auto; text-align: center;" >
                 </div>
+            </div>
             
+            <div class="form-row">
                 <div class="form-group col" style="text-align: center;">
                     <label for="fsize">物理块数</label>
-                    <input type="text" name="fsize" id="fsize" class="form-control" placeholder="ex. 3" style="width: 9%; margin: auto; text-align: center;" required {% if frameCount %} value="{{ frameCount }}" {% endif %}>
+                    <input type="text" name="fsize" id="fsize" class="form-control" placeholder="ex. 3" style="width: 18%; margin: auto; text-align: center;" required {% if frameCount %} value="{{ frameCount }}" {% endif %}>
                 </div>
             </div>
 
 
 
-        <div class="form-row" style="display: flex; justify-content: center; align-items: center; margin: 0; padding: 0;">
 
-                <div class="form-group col" style="margin: 0px; padding: 0px; text-align: center;" >
+        <div class="form-row" style="display: flex; justify-content: center; ">
+                <div class="form-group" style="margin: 0; padding: 5px; text-align: center;" >
                 <button type="button" class="btn btn-primary" onclick="randomizeInputs()">随机</button>
                 </div>
 
-                 <div class="form-group col" style="margin: 0px; padding: 0px; text-align: center;" >
+                 <div class="form-group" style="margin: 0; padding: 5px; text-align: center;"  >
                     <input type="submit" class="btn btn-primary">
                 </div>
         </div>
