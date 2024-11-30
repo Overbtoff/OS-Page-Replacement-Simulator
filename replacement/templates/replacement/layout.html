@@ -81,9 +81,16 @@
 
             <div class="form-row">
                 <div class="form-group col" style="text-align: center;">
+                <button type="button" class="btn btn-primary" onclick="randomizeInputs()">随机填写</button>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col" style="text-align: center;">
                     <input type="submit" class="btn btn-primary">
                 </div>
             </div>
+
         </form> 
     </div>
         
@@ -95,7 +102,30 @@
         {% endblock %}
     </div>
 
+<script>
+function randomizeInputs() {
+    // 生成随机页面序列
+    var pageRefsIn = "";
+    for (var i = 0; i < 20; i++) { // 假设我们想要一个长度为20的随机序列
+        pageRefsIn += Math.floor(Math.random() * 10); // 生成一个0-9之间的随机数
+        if (i < 19) pageRefsIn += " "; // 在数字之间添加空格，除了最后一个数字
+    }
+
+    // 生成随机物理块数
+    var frameCount = Math.floor(Math.random() * 10) + 1; // 生成一个1-10之间的随机数
+
+    // 将生成的值赋值给对应的输入字段
+    document.getElementById("seq").value = pageRefsIn;
+    document.getElementById("fsize").value = frameCount;
+}
+</script>
+
+
 </body>
+
+
+
+
 
 <footer style="font-family: 'Roboto Mono', monospace; text-align: center">
     <a href="https://www.imu.edu.cn">IMU</a>
