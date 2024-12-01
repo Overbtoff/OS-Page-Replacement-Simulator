@@ -6,7 +6,7 @@
     <script>
         AOS.init();
     </script>
-        
+        <script src="https://fastly.jsdelivr.net/npm/chart.js"></script>  
 
     <div style="display: flex; justify-content: center; margin: 0;">
         <iframe src="{% url 'step' %}?pageRefsIn={{ pageRefsIn }}&pageRefs={{ pageRefs }}&frameCount={{ frameCount }}&algorithm={{ algorithm }}" frameborder="0" style="width: 80%; height: 600px;"></iframe>
@@ -140,4 +140,60 @@
 </div>
 
     <hr>
+        <!-- 添加折线图 -->
+        <div style="width: 80%; margin: auto;">
+            <canvas id="hitRateChart"></canvas>
+        </div>
+
+        <script>
+            var ctx = document.getElementById('hitRateChart').getContext('2d');
+            var hitRateChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['FIFO', 'LRU', 'LFU', 'OPT'],
+                    datasets: [{
+                        label: '命中次数',
+                        data: [{{fifohit}}, {{lruhit}}, {{lfuhit}}, {{opthit}}],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        yAxisID: 'y1',
+                        fill: false
+                    }, {
+                        label: '命中率 (%)',
+                        data: [{{fiforatio}}, {{lruratio}}, {{lfuratio}}, {{optratio}}],
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        yAxisID: 'y2',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y1: {
+                            beginAtZero: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '命中次数'
+                            }
+                        },
+                        y2: {
+                            beginAtZero: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: '命中率 (%)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '四种算法的命中率和命中次数'
+                        }
+                    }
+                }
+            });
+        </script>
     {% endblock %}
