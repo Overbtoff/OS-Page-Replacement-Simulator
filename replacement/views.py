@@ -32,7 +32,7 @@ def transpose(l1, num):
     #print(l2)
     return l2
 
-def __optimal():
+def __optimal(): #OPT算法
     global optfinalList, optfinalstr, optfault, opthit, optratio
     global a,n,m
     x = 0
@@ -119,20 +119,9 @@ def __optimal():
     optfault = page_faults
     opthit = n - page_faults
     optratio = 100.0*opthit/n
-        #print(temp)
 
-           # print("\n%d ->" % (a[i]))
-            # for j in range(m):
-            #     if page[j] != FREE:
-            #         print(page[j])
-            #     else:
-            #         print("-")
-        # else:
-        #     print("\n%d -> No Page Fault" % (a[i]))
-            
-    #print("\n Total page faults : %d." % (page_faults))
 
-def fifo(sequence, frameAmt):
+def fifo(sequence, frameAmt): #FIFO算法
     global fifofinalList, fifofinalstr, fifofault, fifohit, fiforatio
     fifoallList = []
     sequenceList = sequence
@@ -189,7 +178,7 @@ def fifo(sequence, frameAmt):
     #print(f"---FIFO---\nHit: {hit}, Miss: {miss}")
 
 
-def lru(sequence, frameAmt):
+def lru(sequence, frameAmt): #LRU算法
     global lrufinalList, lrufinalstr, lrufault, lruhit, lruratio
     sequenceList = sequence
     frames = []
@@ -241,100 +230,8 @@ def lru(sequence, frameAmt):
     lruratio = 100.0*hit/(len(sequenceList))
 
         
-    #print(f"---LRU---\nHit: {hit}, Miss: {miss}")
 
-# def lfu(sequence, frameAmt):
-#     global lfufinalList, lfufinalstr, lfufault, lfuhit, lfuratio
-#     sequenceList = sequence
-#     frames = []
-#     lfuallList = []
-#     hit = 0
-#     miss = 0
-#     temp = []
-#     cache = {}  # 缓存，存储键和对应的值及频率
-#     freq = {}  # 存储每个频率对应的键集合
-#     size = 0  # 当前缓存中的数据量
-#
-#     # LFU算法
-#     for key in sequenceList:
-#         if key in cache:
-#             # 缓存命中
-#             hit += 1
-#             cache[key]['freq'] += 1  # 增加页面的访问频率
-#             # 确保 freq 字典中存在该频率的键，如果不存在则创建一个空列表
-#             freq.setdefault(cache[key]['freq'], []).append(key)
-#             # 更新 frames 列表，将命中的页面移动到列表末尾
-#             frames.remove(key)
-#             frames.append(key)
-#
-#             temp = frames[:]
-#             temp.append(key)
-#             lfuallList.append(temp)
-#         else:
-#             # 缓存未命中
-#             miss += 1
-#             if size < frameAmt:
-#                 # 缓存未满，添加新项
-#                 cache[key] = {'val': key, 'freq': 1}
-#                 freq[1] = [key]
-#                 frames.append(key)
-#                 temp = frames[:]
-#                 temp[-1] = 'red' + str(temp[-1])
-#                 lfuallList.append(temp[:])
-#                 size += 1
-#             else:
-#                 # 缓存已满，需要淘汰
-#                 while freq:
-#                     # 对频率列表进行升序排序，确保lowest_freq是最小的频率
-#                     freq_list = sorted(freq.keys(), reverse=False)
-#                     lowest_freq = freq_list[0]
-#                     if len(freq[lowest_freq]) > 0:
-#                         # 从具有最低频率的页面列表中弹出第一个页面作为被淘汰的页面
-#                         evict_key = freq[lowest_freq].pop(0)
-#                         if freq[lowest_freq] == []:
-#                             del freq[lowest_freq]
-#                         del cache[evict_key]
-#                         frames.remove(evict_key)
-#                         break
-#                     else:
-#                         # 如果最低频率的列表为空，删除这个频率
-#                         del freq[lowest_freq]
-#                 # 添加新项
-#                 cache[key] = {'val': key, 'freq': 1}
-#                 freq.setdefault(1, []).append(key)
-#                 frames.append(key)
-#                 temp = frames[:]
-#                 temp[-1] = 'red' + str(temp[-1])
-#                 lfuallList.append(temp[:])
-#                 size += 1
-#
-#
-#
-#     # 转置lfuallList以生成HTML表格
-#     # lfuallList.append(temp)
-#     lfufinalList = transpose(lfuallList, frameAmt)
-#
-#     # 添加HTML标签以生成表格
-#     lfufinalstr = ''
-#     for lists in lfufinalList:
-#         lfufinalstr += '<tr>'  # 开始新的一行
-#         for attr in lists:
-#             if 'red' in attr:
-#                 # 如果属性中包含'red'，表示这是一个新加入缓存的元素，用红色标记
-#                 lfufinalstr += '<td style="padding: 13px; background-color:#f44336;">' + attr[3:] + '</td>'
-#             else:
-#                 # 否则，正常添加缓存中的元素
-#                 lfufinalstr += '<td style="padding: 13px;">' + attr + '</td>'
-#         lfufinalstr += '</tr>\n'  # 结束当前行
-#
-#     # 统计和赋值
-#     lfufault = miss  # 缓存未命中次数
-#     lfuhit = hit  # 缓存命中次数
-#     lfuratio = 100.0 * hit / (len(sequenceList) if sequenceList else 1)  # 计算命中率
-#
-
-#
-def lfu(sequence, frameAmt):
+def lfu(sequence, frameAmt): # LFU算法
     global lfufinalList, lfufinalstr, lfufault, lfuhit, lfuratio
     sequenceList = sequence
     frames = []  # 当前内存框架
@@ -421,7 +318,7 @@ class EntryForm(forms.Form):
 
 
 # Create your views here.
-def index(request):
+def index(request): #返回index网页模板值
     if request.method == "POST":
         form = EntryForm(request.POST)
         
@@ -433,21 +330,12 @@ def index(request):
         "form": EntryForm()
     })
 
-def result(request):
+def result(request): #返回result网页模板值
     global fifofinalList, fifofinalstr,fifofault, fifohit, fiforatio
     global lrufinalList, lrufinalstr, lrufault, lruhit, lruratio
     global lfufinalList, lfufinalstr, lfufault, lfuhit, lfuratio
     global optfinalList, optfinalstr, optfault, opthit, optratio
     if request.method == "POST":
-        
-        # form = EntryForm(request.POST)
-        # #val = request.POST['sTest'] 
-        # #print(val)
-        # if form.is_valid():
-        #     sequenceString = form.cleaned_data["seq"]
-        #     frameAmtString = form.cleaned_data["frames"] 
-        #     main(sequenceString, frameAmtString)
-        #print(finalList)
         sequenceString = request.POST["seq"]
         frameAmtString = request.POST["fsize"]
         main(sequenceString, frameAmtString)
@@ -496,7 +384,7 @@ def result(request):
         })
     return HttpResponse("resultpage")
 
-def step(request):
+def step(request): #返回step网页模板值
     page_refs_in = request.GET.get('pageRefsIn', '')
     page_refs = request.GET.get('pageRefs', '')
     frame_count = request.GET.get('frameCount', 0)
